@@ -21,7 +21,11 @@ def is_image_url(url: str) -> bool:
     if url.lower().endswith("[/img]"):
         url = url[:-6]
 
-    u = urlparse(url)
+    try:
+        u = urlparse(url)
+    except ValueError:
+        log.info("Error parsing URL: %s", url)
+        return False
 
     # check path suffix
     path = pathlib.Path(u.path)

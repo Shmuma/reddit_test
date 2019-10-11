@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
+import csv
+import sys
+import tqdm
+import json
+
 import argparse
 import logging
-import tqdm
-import csv
-import json
 import collections
 import pathlib
 
@@ -41,7 +43,7 @@ if __name__ == "__main__":
         output_writer.writerow(["id", "reddit", "text", "url"])
 
         with data_path.open("rt", encoding='utf-8') as fd:
-            for input_idx, l in enumerate(tqdm.tqdm(fd, total=EXPECTED_LINES)):
+            for input_idx, l in enumerate(tqdm.tqdm(fd, total=EXPECTED_LINES, file=sys.stdout)):
                 count_rows += 1
                 if args.limit is not None and input_idx >= args.limit:
                     log.info("Limit of input rows has reached, stopping")
