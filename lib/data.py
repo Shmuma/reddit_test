@@ -8,6 +8,7 @@ log = logging.getLogger("data")
 
 DEFAULT_DATA_FILE = "data/safe_links_all"
 DEFAULT_OUTPUT_PREFIX = "data/images"
+DEFAULT_IMAGES_FILE = DEFAULT_OUTPUT_PREFIX + ".csv"
 
 # lower-cased set of image-hosting domains
 IMAGE_DOMAINS = {'imgur.com', 'i.imgur.com', 'flic.kr', 'twitpic.com', 'www.imagelay.com',
