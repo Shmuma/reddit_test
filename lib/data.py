@@ -1,5 +1,6 @@
 import pathlib
 import logging
+import json
 from urllib.parse import urlparse
 from typing import Tuple, Optional
 
@@ -47,14 +48,12 @@ def parse_input_line(l: str) -> Optional[Tuple[str, str, str]]:
     :param l: input line
     :return: None if parse failed, or tuple with (reddit, text, url)
     """
-    # json.loads() could be used here, but this method is 3-4x faster with 1M lines/second on my machine
-    l = l.strip("[]")
-    if l.endswith(",null"):
-        l = l[:-5]
-    vals = l.split('","')
-    if len(vals) < 4:
-        return None
-    reddit, text, url, *_ = vals
-    reddit = reddit.strip('"')
-    return reddit, text, url
+    try:
+        dat = json.loads(l)
+        if len(dat) != 5:
+            return None
+        return tuple(dat[:3])
+    except ValueError:
+        pass
+    return None
 
