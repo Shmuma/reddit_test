@@ -48,8 +48,10 @@ def parse_input_line(l: str) -> Optional[Tuple[str, str, str]]:
     """
     # json.loads() could be used here, but this method is 3-4x faster with 1M lines/second on my machine
     l = l.strip("[]")
+    if l.endswith(",null"):
+        l = l[:-5]
     vals = l.split('","')
-    if len(vals) != 5:
+    if len(vals) < 4:
         return None
     reddit, text, url, *_ = vals
     reddit = reddit.strip('"')
