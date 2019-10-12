@@ -24,9 +24,8 @@ if __name__ == "__main__":
     glove = api.load("glove-wiki-gigaword-100")
     input_path = pathlib.Path(args.data).with_suffix(".txt")
     sents = IndexedLineDocument(str(input_path))
-    s = SplitIndexedList(sents)
     model = SIF(glove, workers=2)
-    model.train(s)
+    model.train(sents)
     model.save("model.dat")
 
 
