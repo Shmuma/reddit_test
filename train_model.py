@@ -2,10 +2,10 @@
 import argparse
 import logging
 import pathlib
-from fse import IndexedLineDocument, SplitIndexedList
+from fse import IndexedLineDocument
 from fse.models import SIF
 
-from lib import data, utils
+from lib import data, utils, model
 import gensim.downloader as api
 
 log = logging.getLogger("train_model")
@@ -18,7 +18,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--data", default=data.DEFAULT_OUTPUT_PREFIX,
                         help="Prefix of input data to read, default=" + data.DEFAULT_OUTPUT_PREFIX)
-    parser.add_argument("--limit", type=int, help="Optional limit of input lines to process, default=No limit")
+    parser.add_argument("-o", "--output", default=model.DEFAULT_MODEL_FILE,
+                        help="File name to save model, default=" + model.DEFAULT_MODEL_FILE)
     args = parser.parse_args()
 
     glove = api.load("glove-wiki-gigaword-100")
@@ -26,6 +27,4 @@ if __name__ == "__main__":
     sents = IndexedLineDocument(str(input_path))
     model = SIF(glove, workers=2)
     model.train(sents)
-    model.save("model.dat")
-
-
+    model.save(args.output)
