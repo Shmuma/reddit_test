@@ -23,15 +23,16 @@ if __name__ == "__main__":
                         help="File with model to load, default=" + model.DEFAULT_MODEL_FILE)
     args = parser.parse_args()
 
+    log.info("Loading sentence data from %s", args.data)
+    data = IndexedLineDocument(args.data)
+    log.info("Sentences loaded, loading model...")
+
     glove = api.load("glove-wiki-gigaword-100")
     model = SIF(glove)
     model = model.load(args.model)
     # workaround before the issue fixed https://github.com/oborchers/Fast_Sentence_Embeddings/issues/12
     model.svd_res = compute_principal_components(model.sv.vectors, components=model.components)
-
-    log.info("Loading sentence data from %s", args.data)
-    data = IndexedLineDocument(args.data)
-    log.info("Loaded")
+    model.components = 0
 
     nlp = English()
     tokenizer = nlp.Defaults.create_tokenizer(nlp)
