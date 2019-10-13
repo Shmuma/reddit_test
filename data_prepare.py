@@ -14,7 +14,7 @@ from spacy.lang.en import English
 
 from lib import data, utils
 
-log = logging.getLogger("filter_images")
+log = logging.getLogger("data_prepare")
 
 EXPECTED_LINES = 206669601
 

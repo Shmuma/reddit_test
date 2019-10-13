@@ -8,7 +8,7 @@ from fse.models import SIF
 from lib import data, utils
 import gensim.downloader as api
 
-log = logging.getLogger("compute_embs")
+log = logging.getLogger("train_model")
 
 EXPECTED_LINES = 66836199
 
